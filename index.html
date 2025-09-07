@@ -588,7 +588,7 @@
                 <p class="text-base text-gray-400 mb-6">
                     📞 Number: 063 462 3611
                 </p>
-                <button id="contact-btn" class="button-lg bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 border-green-500">GOT IT! 🚀</button>
+                <button id="contact-btn" class="button-lg bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 border-green-500">RSVP ON WHATSAPP 💬</button>
             </div>
         </div>
     </div>
@@ -668,6 +668,15 @@
             });
 
             contactBtn.addEventListener('click', () => {
+                // Open WhatsApp with pre-filled message
+                const phoneNumber = '27634623611'; // International format without +
+                const message = 'Hi Rushil! I got your birthday invitation and I\'m ready to play! 🎮🎉';
+                const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+                
+                // Open WhatsApp in new tab
+                window.open(whatsappUrl, '_blank');
+                
+                // Close the modal
                 rsvpModal.classList.add('hidden');
             });
 
