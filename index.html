@@ -19,28 +19,84 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            position: relative;
+        }
+        
+        /* Landscape orientation enforcement for mobile */
+        .rotate-message {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(to bottom, #1a202c, #2d3748);
+            z-index: 9999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        @media screen and (max-width: 768px) and (orientation: portrait) {
+            .rotate-message {
+                display: flex;
+            }
+            .switch-container {
+                display: none;
+            }
+        }
+        
+        .rotate-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: rotate 2s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         .switch-container {
             position: relative;
-            width: 90vw;
-            max-width: 600px;
+            width: 95vw;
+            max-width: 800px;
             aspect-ratio: 16 / 9;
             background-color: #0d1117;
-            border-radius: 2rem;
+            border-radius: 1.5rem;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            padding: 1rem;
-            transform: scale(0.85); /* Mobile optimization */
+            padding: 0.5rem;
+            transform: scale(0.8);
         }
         
-        /* Adjust for larger screens */
+        /* Responsive scaling */
+        @media (min-width: 480px) and (orientation: landscape) {
+            .switch-container {
+                transform: scale(0.9);
+                width: 90vw;
+                padding: 1rem;
+            }
+        }
+        
         @media (min-width: 768px) {
             .switch-container {
                 transform: scale(1);
+                width: 85vw;
+                max-width: 900px;
+                border-radius: 2rem;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .switch-container {
+                width: 75vw;
+                max-width: 1000px;
             }
         }
 
@@ -60,12 +116,18 @@
 
         .joystick-left, .joystick-right {
             position: absolute;
-            width: 25%;
+            width: 22%;
             height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
+        }
+        
+        @media (max-width: 480px) {
+            .joystick-left, .joystick-right {
+                width: 20%;
+            }
         }
         
         .joystick-left {
@@ -93,13 +155,27 @@
         .button-pad {
             background-color: rgba(0, 0, 0, 0.3);
             border-radius: 50%;
-            width: 2.5rem;
-            height: 2.5rem;
+            width: 2rem;
+            height: 2rem;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
             transition: transform 0.1s ease;
+        }
+        
+        @media (min-width: 480px) {
+            .button-pad {
+                width: 2.5rem;
+                height: 2.5rem;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .button-pad {
+                width: 3rem;
+                height: 3rem;
+            }
         }
 
         .button-pad:active {
@@ -110,15 +186,32 @@
             background-color: #7b4397;
             background-image: linear-gradient(to right, #7b4397 0%, #dc2430 100%);
             color: #ffffff;
-            padding: 1rem 3rem;
+            padding: 0.75rem 2rem;
             border-radius: 9999px;
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             font-weight: bold;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             position: relative;
             z-index: 10;
+            min-height: 48px;
+            touch-action: manipulation;
+            border: none;
+        }
+        
+        @media (min-width: 480px) {
+            .button-lg {
+                padding: 1rem 2.5rem;
+                font-size: 1.375rem;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .button-lg {
+                padding: 1rem 3rem;
+                font-size: 1.5rem;
+            }
         }
 
         .button-lg:hover {
@@ -132,16 +225,40 @@
         }
 
         .title {
-            font-size: 2.5rem;
+            font-size: 1.75rem;
             font-weight: bold;
             margin-bottom: 0.5rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            line-height: 1.2;
         }
         
         .subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            margin-bottom: 1rem;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            line-height: 1.4;
+            padding: 0 1rem;
+        }
+        
+        @media (min-width: 480px) and (orientation: landscape) {
+            .title {
+                font-size: 2rem;
+            }
+            .subtitle {
+                font-size: 1.25rem;
+                margin-bottom: 1.25rem;
+                padding: 0;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .title {
+                font-size: 2.5rem;
+            }
+            .subtitle {
+                font-size: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
         }
         
         @keyframes fadeIn {
@@ -221,16 +338,22 @@
     </div>
 
     <!-- RSVP Modal -->
-    <div id="rsvp-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center hidden z-50">
-        <div class="bg-gray-800 p-8 rounded-lg shadow-2xl max-w-sm w-full relative border-4 border-white">
-            <button id="modal-close-btn" class="absolute top-2 right-4 text-3xl font-bold text-white hover:text-gray-400">&times;</button>
-            <h2 class="title text-3xl mb-4">MISSION ACCOMPLISHED!</h2>
-            <p class="text-xl mb-4 text-gray-300">Please RSVP to Rushil!</p>
+    <div id="rsvp-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center hidden z-50 p-4">
+        <div class="bg-gray-800 p-6 rounded-lg shadow-2xl max-w-sm w-full relative border-4 border-white mx-4">
+            <button id="modal-close-btn" class="absolute top-2 right-4 text-2xl font-bold text-white hover:text-gray-400 min-w-8 min-h-8 flex items-center justify-center">&times;</button>
+            <h2 class="text-2xl font-bold mb-4 text-white">MISSION ACCOMPLISHED!</h2>
+            <p class="text-lg mb-4 text-gray-300">Please RSVP to Rushil!</p>
             <p class="text-base text-gray-400 mb-6">
                 Number: 0684623611
             </p>
-            </ul>
         </div>
+    </div>
+    
+    <!-- Rotate Device Message -->
+    <div class="rotate-message">
+        <div class="rotate-icon">📱</div>
+        <h2 class="title">ROTATE YOUR DEVICE</h2>
+        <p class="subtitle">Please rotate your device to landscape mode for the best gaming experience!</p>
     </div>
     
     <script>
